@@ -1,14 +1,28 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_library(
-    name = "urlshort_lib",
+    name = "lib",
     srcs = ["main.go"],
     importpath = "github.com/colematthew4/merry-go-round/urlshort",
     visibility = ["//visibility:public"],
 )
 
-go_library(
+go_binary(
     name = "urlshort",
-    embed = [":urlshort_lib"],
+    embed = [":lib"],
     visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "package",
+    srcs = [":lib"],
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_base",
+    entrypoint = ["/urlshort"],
+    tars = [":package"],
 )
