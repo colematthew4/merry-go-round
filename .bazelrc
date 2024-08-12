@@ -1,0 +1,2 @@
+# disable Bzlmod for every Bzael command
+common --noenable_bzlmod
