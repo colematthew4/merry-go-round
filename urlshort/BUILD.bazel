@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "urlshort_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/colematthew4/merry-go-round/urlshort",
+    visibility = ["//visibility:public"],
+)
+
+go_library(
+    name = "urlshort",
+    embed = [":urlshort_lib"],
+    visibility = ["//visibility:public"],
+)
