@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/colematthew4/merry-go-round/url_shortener/config"
 	"github.com/colematthew4/merry-go-round/url_shortener/data"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -11,7 +12,7 @@ import (
 
 func main() {
 	db, err := gorm.Open(
-		postgres.Open("host=localhost user=gorm password=gorm dbname=gorm port=5432 sslmode=disable TimeZone=UTC"),
+		postgres.Open(config.GetDbConfig().String()),
 		&gorm.Config{},
 	)
 	if err != nil {
