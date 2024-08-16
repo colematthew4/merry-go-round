@@ -5,12 +5,12 @@ load("@rules_pkg//:pkg.bzl", "pkg_tar")
 go_library(
     name = "lib",
     srcs = ["main.go"],
-    importpath = "github.com/colematthew4/merry-go-round/urlshort",
+    importpath = "github.com/colematthew4/merry-go-round/url_shortener",
     visibility = ["//visibility:public"],
 )
 
 go_binary(
-    name = "urlshort",
+    name = "url_shortener",
     embed = [":lib"],
     visibility = ["//visibility:public"],
 )
@@ -23,6 +23,6 @@ pkg_tar(
 oci_image(
     name = "image",
     base = "@distroless_base",
-    entrypoint = ["/urlshort"],
+    entrypoint = ["/url_shortener"],
     tars = [":package"],
 )
