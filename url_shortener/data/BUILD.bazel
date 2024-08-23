@@ -1,0 +1,9 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "data",
+    srcs = ["models.go"],
+    importpath = "github.com/colematthew4/merry-go-round/url_shortener/data",
+    visibility = ["//visibility:public"],
+    deps = ["@io_gorm_gorm//:gorm"],
+)

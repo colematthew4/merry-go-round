@@ -1,28 +1,35 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 load("@rules_oci//oci:defs.bzl", "oci_image")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_library(
-    name = "lib",
+    name = "url_shortener_lib",
     srcs = ["main.go"],
     importpath = "github.com/colematthew4/merry-go-round/url_shortener",
-    visibility = ["//visibility:public"],
+    visibility = ["//visibility:private"],
+    deps = [
+        "//url_shortener/config",
+        "//url_shortener/data",
+        "@io_gorm_driver_postgres//:postgres",
+        "@io_gorm_gorm//:gorm",
+    ],
 )
 
 go_binary(
     name = "url_shortener",
-    embed = [":lib"],
+    embed = [":url_shortener_lib"],
     visibility = ["//visibility:public"],
 )
 
 pkg_tar(
     name = "package",
-    srcs = [":lib"],
+    srcs = [":url_shortener_lib"],
 )
 
 oci_image(
     name = "image",
-    base = "@distroless_base",
+    # base = "@distroless_base",
+    base = "@alpine_linux_amd64",
     entrypoint = ["/url_shortener"],
     tars = [":package"],
 )
