@@ -23,10 +23,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: bazel-contrib/setup-bazel@0.8.5
         with:
-          repository_cache: true
+          repository-cache: true
       - id: targets-with-image-label
         run: |
-          PACKAGES=$(bazel query 'kind(oci_image, //...)' --output package | jq -Rs 'split("\n") | map(select(length > 0))')
+          PACKAGES=$(bazel query 'kind(oci_image, //...)' --output package | jq -Rcs 'split("\n") | map(select(length > 0))')
           echo "packages=$PACKAGES" >> $GITHUB_OUTPUT
 
   build-image:
