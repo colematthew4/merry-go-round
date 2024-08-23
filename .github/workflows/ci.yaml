@@ -21,7 +21,7 @@ jobs:
       packages: ${{ toJSON(steps.targets-with-image-label.outputs.packages) }}
     steps:
       - uses: actions/checkout@v4
-      - uses: bazel-contrib/setup-bazel@v0.8.5
+      - uses: bazel-contrib/setup-bazel@0.8.5
         with:
           repository_cache: true
       - id: targets-with-image-label
@@ -40,7 +40,7 @@ jobs:
         package: ${{ fromJSON(needs.prep-images.outputs.packages) }}
     steps:
       - uses: actions/checkout@v4
-      - uses: bazel-contrib/setup-bazel@v0.8.5
+      - uses: bazel-contrib/setup-bazel@0.8.5
         with:
           repository-cache: true
       - run: bazel build //${{ matrix.package }}:image
