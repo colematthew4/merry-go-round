@@ -30,7 +30,7 @@ jobs:
           echo "packages=$PACKAGES" >> $GITHUB_OUTPUT
 
   build-image:
-    name: Build ${{ matrix.package }} Image
+    name: Build Image
     runs-on: ubuntu-latest
     needs:
       - prep-images
